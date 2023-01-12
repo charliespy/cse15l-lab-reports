@@ -1,4 +1,4 @@
-#**Charlie Sun**#
+# Charlie Sun #
 > "That's what she said" - Michael Scott
 ---
 
