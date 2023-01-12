@@ -7,7 +7,7 @@ VScode is a popular programming text editor all around the world. To start off, 
 
 When it is installed, you be able to open it and see something like this: 
 
-![Image](https://drive.google.com/file/d/1SZ20DXxYa5l-rqkJRJogvgtP1Y9wYbzS/view?usp=share_link)
+![Image](lab1_image1.png)
 
 
 ## 2 - Remotely Connecting
