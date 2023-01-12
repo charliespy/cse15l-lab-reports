@@ -12,8 +12,9 @@ When it is installed, you be able to open it and see something like this:
 
 ## 2 - Remotely Connecting
 
-
+![Image](lab1_image2.png)
 
 
 ## 3 - Trying Some Commands
 
+![Image](lab1_image3.png)
