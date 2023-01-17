@@ -20,11 +20,32 @@ Next, to access `ssh`, open a new terminal on VScode and type the following comm
 ssh cs15lwi23zz@ieng6.ucsd.edu
 ```
 
+Since this is your first time connecting to the server (otherwise why would you be reading this tutorial), you'll see a message like this: 
+```
+⤇ ssh cs15lwi23zz@ieng6.ucsd.edu
+The authenticity of host 'ieng6.ucsd.edu (128.54.70.227)' can't be established.
+RSA key fingerprint is SHA256:ksruYwhnYH+sySHnHAtLUHngrPEyZTDl/1x99wUQcec.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? 
+```
 
+Just go ahead and type "yes" in the terminal, and enter your password when prompted to. 
+> Note: When you type your password, what you've entered will NOT appear on the screen. Don't panic, just type them in all at once. 
+
+If you've entered your password correctly, you'll see a message like this: 
 
 ![Image](lab1_image2.png)
 
+Congratulations! Your terminal is now connected to a computer in the CSE basement! 
+
 
 ## 3 - Trying Some Commands
+Once you're connected to the server, you may try some commands, such as `cd`, `ls`, `pwd`, `mkdir`, and `ls -lat`. Try running them both on your *local* computer and on the *remote* server. How are they different? 
+
+Here's an example of the command `ls -lat` that you might see on your end: 
 
 ![Image](lab1_image3.png)
+
+To log out of the remote server, simply press Ctrl-D or type `exit` in the terminal. 
+
+**This marks the end of this tutorial. Stay tuned for more tutorials about Computer Science in the future! Peace!**
+
