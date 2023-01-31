@@ -47,19 +47,19 @@ For example, when you type `ls -lat` in the terminal, you'll likely see somethin
 
 The `ls` command shows all the files/subdirectories in the current directory. Adding the ` -lat` flag behind `ls` in addition shows all the hidden files, sorted based on last time modified (most recent on top). 
 
-<br>
+\
 
 If you type `ls`, you'll see that one of the subdirectories is "perl5". If we type `cd perl5` in the terminal, we can jump to that directory! 
 
 ![Image](lab1_image4.png)
 
-<br>
+\
 
 Inside of the `perl5` directory, if you type `pwd`, which stands for "print working directory," in the terminal, it will show us this: 
 
 ![Image](lab1_image5.png)
 
-<br>
+\
 
 Now, if we want to make a new directory in `perl5` called "hello", we can type the following command: 
 
@@ -67,7 +67,7 @@ Now, if we want to make a new directory in `perl5` called "hello", we can type t
 
 As you can see, after we typed `mkdir hello` in the terminal, nothing happened, but if we type `ls` again now, we can see that there's a new directory called "hello" now! 
 
-<br>
+\
 
 After you've had enough fun with ieng6, to log out of the remote server, simply press Ctrl-D or type `exit` in the terminal. 
 
