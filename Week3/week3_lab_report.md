@@ -12,11 +12,11 @@ The database that we will be utilizing in today's tutorial is a github repositor
 
 The `-i` option tells grep to ignore uppercase vs. lowercase characters. If you cd into `written_2/travel_guides/berlitz1/` and type ls, you can see a bunch of text tiles of various different cities and countries around the world. If, say, we want to search the occurrences of the word "city" in the file "HistoryDublin.txt", we can type `grep "city" HistoryDublin.txt` or `grep "City" HistoryDublin.txt` into the command line. Here are their respective results: 
 
-![Image](lab3_image1)
+![Image](lab3_image1.png)
 
 These commands of course work and are pretty useful, but just in case you want to include both the search results of "city" AND "City" in one search, you can instead type `grep -i "city" HistoryDublin.txt`. This will yield the following result: 
 
-![Image](lab3_image2)
+![Image](lab3_image2.png)
 
 Pretty cool, right! Well, this is only the start! 
 
@@ -26,21 +26,21 @@ Another very useful command is `-r`, which recursively searches all subdirectori
 
 To solve this problem, all you have to do is to add the `-r` option, and then you can laugh and enjoy your cup of coffee while reading all the search results! If you type `grep -r "Lucayans" written_2`, you should see the following result:
 
-![Image](lab3_image3)
+![Image](lab3_image3.png)
 
 Let's try this with another word! If you type `grep -r "hot pot" written_2`, you should see this result: 
 
-![Image](lab3_image4)
+![Image](lab3_image4.png)
 
 ## 3. `l`
 
 The command line option `l` lists all the results from grep by the file names. For example, if I only wanted to know which file contained the word "Lucayans" and had no intention in seeing its actual occurrences in text, I could add `-l`. If you type `grep -r -l "Lucayans" written_2`, you should see the following result: 
 
-![Image](lab3_image5)
+![Image](lab3_image5.png)
 
 See? Because "Lucayans" only appeared in one file, Bash only printed one line - it saved SO MUCH space! In fact, `-l` is extremely useful when you're searching for a word that occurs many many times. For instance, if you type `grep -r -l "Beijing" written_2`, you should see the following result: 
 
-![Image](lab3_image6)
+![Image](lab3_image6.png)
 
 This much occurrences of the word "Beijing" would take up essentially my entire terminal, so it would be very hard then to find work I did above again. 
 
@@ -48,11 +48,11 @@ This much occurrences of the word "Beijing" would take up essentially my entire 
 
 Last but not least, we have the command line option `-n`. This adds a line number to each matching line, so that it is easier to find the words later on if you want. Take the word "Lucayans" again as an example. If you type `grep -r -n "Lucayans" written_2`, you should see the following result: 
 
-![Image](lab3_image7)
+![Image](lab3_image7.png)
 
 See the "6" and "7" in front of each occurrence? We can also try it on the phrase "hot sauce." If you type `grep -r -n "hot sauce" written_2`, you should see the following result: 
 
-![Image](lab3_image8)
+![Image](lab3_image8.png)
 
 This way, grep can not only tell us in which directory, file the word is in, but also its specific line number. How convenient! 
 
