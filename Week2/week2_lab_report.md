@@ -103,28 +103,43 @@ class MyStringChecker implements StringChecker {
 }
 ```
 
-Here are one test that I wrote: 
+Here are two tests that I wrote: 
 
 ```java
 import static org.junit.Assert.*;
 import org.junit.*;
+
+import java.beans.Transient;
 import java.util.*;
 
 public class ListTests {
-    @Test
+    @Test 
     public void testListExamples1() {
         List<String> str1 = Arrays.asList(
-            new String[]{"1", "22", "333", "4444"}
+            new String[]{"a", "bb", "ccc"}
         );
         StringChecker sc1 = new MyStringChecker();
         List<String> result1 = ListExamples.filter(str1, sc1);
 
-        assertEquals(Arrays.asList(
-            new String[]{"333", "4444"}
-        ), result1);
+        assertEquals(Arrays.asList(new String[]{"ccc"}), result1);
+    }
+
+    @Test
+    public void testListExamples2() {
+        List<String> str2 = Arrays.asList(
+            new String[]{"1", "22", "333", "4444"}
+        );
+        StringChecker sc2 = new MyStringChecker();
+        List<String> result2 = ListExamples.filter(str2, sc2);
+
+        assertEquals(Arrays.asList(new String[]{"333", "4444"}), result2);
     }
 }
 ```
+
+For the first test, it successfully passes with the correct result. However, the code is still buggy, which is proven in the second test. When we run the second test, we see the following outcome: 
+
+![Image](lab2_image5.png)
 
 The expected result is a list of strings of "333" and "4444" in that order. However, when we ran the test with JUnit, we quickly found that it gave us a different result of "4444" and "333" - the order is reversed! 
 
@@ -136,7 +151,15 @@ This adds the result to the **front** of the list, instead of appending it to th
 
 Luckily, this is an easy fix. All we have to do is to change the line to:
 ```java
-result.add(s);
+static List<String> filter(List<String> list, StringChecker sc) {
+    List<String> result = new ArrayList<>();
+    for(String s: list) {
+      if(sc.checkString(s)) {
+        result.add(s);
+      }
+    }
+    return result;
+  }
 ```
 Now, when we run the test again, it passes without any issues. 
 
