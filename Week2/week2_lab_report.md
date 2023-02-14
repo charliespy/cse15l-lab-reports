@@ -154,12 +154,12 @@ Luckily, this is an easy fix. All we have to do is to change the line to:
 static List<String> filter(List<String> list, StringChecker sc) {
     List<String> result = new ArrayList<>();
     for(String s: list) {
-      if(sc.checkString(s)) {
-        result.add(s);
-      }
+        if(sc.checkString(s)) {
+            result.add(s);
+        }
     }
     return result;
-  }
+}
 ```
 Now, when we run the test again, it passes without any issues. 
 
