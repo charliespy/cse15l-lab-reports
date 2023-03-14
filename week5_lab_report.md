@@ -22,6 +22,7 @@ The last line is a status update, printing a messsage to the terminal that we've
 The code for this section is the following: 
 ```bash
 cd student-submission
+
 if [[ -f ListExamples.java ]]
 then
   echo "student submission found"
@@ -38,11 +39,11 @@ We will next use an if-statement. If we have found that `ListExamples.java` is a
 
 However, if we do not find `ListExamples.java`, then we will print to the terminal, notifing the student that they ahve submitted the wrong file, and their grade is 0%. Then, by using `exit 1`, we will exit the program so the rest of the script will *not* be executed. 
 
-## 3. 
-
+## 3. Compiling the Submission
+The code for this section is the following: 
 ```bash
 cp ../TestListExamples.java ./
-javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java 2>compiler-error.txt
+javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java 2 > compiler-error.txt
 
 if [[ $? == 0 ]]
 then
@@ -52,9 +53,11 @@ else
   echo "You're grade is 0%, try again!"
   exit 1
 fi
-
 ```
 
+In the first line, by saying `cp ../TestListExamples.java ./`, we are copying the student code file and our test files in the same directory. 
+
+Then, by saying `javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java`, we are compiling the test file. In the same line right after this, by saying `2 > compiler-error.txt`, we are using a technique called "I/O redirection" to store any potential compile errors into a file called `compiler-error.txt`. 
 
 
 
@@ -63,4 +66,4 @@ fi
 
 
 
-2>&1 : I/O Redirection
+
