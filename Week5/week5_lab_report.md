@@ -46,7 +46,7 @@ However, if we do not find `ListExamples.java`, then we will print to the termin
 The code for this section is the following: 
 ```bash
 cp ../TestListExamples.java ./
-javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java 2 > compiler-error.txt
+javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java 2>compiler-error.txt
 
 if [[ $? == 0 ]]
 then
@@ -83,13 +83,12 @@ else
   echo "tests failed"
   cat results.txt
 
-  num_tests=$(grep 'Tests run:' results.txt | sed 's/^.*: //')
-  failures=$(grep 'Failures:' results.txt | sed 's/^.*: //')
-  num_tests=$(($num_tests))
-  failures=$(($failures))
-  successes=$(($num_tests - $failures))
-  
-  echo "You're grade is:" $(($successes / $num_tests))"% Try again!"
+  num_tests=$(grep 'Tests run: ' results.txt | cut -d' ' -f3 | grep -Eo '[0-9]{1,4}')
+  failures=$(grep 'Failures: ' results.txt | cut -d' ' -f6 | grep -Eo '[0-9]{1,4}')
+  successes=$(($num_tests-$failures))
+  grade=$((($successes * 100) / ($num_tests)))
+
+  echo "You're grade is" $grade"%. Try again!"
   exit 1
 fi
 ```
@@ -102,11 +101,88 @@ However, if there is an error (meaning that one or more tests have failed), then
 
 We will use the commands `num_tests=$(grep 'Tests run:' results.txt | sed 's/^.*: //')` and `failures=$(grep 'Failures:' results.txt | sed 's/^.*: //')` to extract the information we need to calculate students' grade. This `grep` command will return the test numbers in `results.txt`. 
 
+Then, we will convert `num_tests` and `failures` from strings to integers and calculate the percentage of tests that the student got correctly. 
 
+At this point, our grading script is complete. A full version of the code is shown below: 
+```bash
+CPATH='".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar"'
+rm -rf student-submission
+git clone $1 student-submission
+echo 'Finished cloning'
 
+cd student-submission
 
+if [[ -f ListExamples.java ]]
+then
+  echo "student submission found"
+else
+  echo "wrong file submitted"
+  echo "You're grade is 0%, try again!"
+  exit 1
+fi
 
+cp ../TestListExamples.java ./
+javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java 2>compiler-error.txt
 
+if [[ $? == 0 ]]
+then
+  echo "successfully compiled"
+else
+  echo "compiler error!!!"
+  cat compiler-error.txt
+  echo "You're grade is 0%, try again!"
+  exit 1
+fi
 
+java -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" org.junit.runner.JUnitCore TestListExamples > results.txt 2>&1
 
+if [[ $? == 0 ]]
+then
+  echo "tests passed"
+  cat results.txt
+  echo "You're grade is 100%, congratulations!"
 
+else
+  echo "tests failed"
+  cat results.txt
+
+  num_tests=$(grep 'Tests run: ' results.txt | cut -d' ' -f3 | grep -Eo '[0-9]{1,4}')
+  failures=$(grep 'Failures: ' results.txt | cut -d' ' -f6 | grep -Eo '[0-9]{1,4}')
+  successes=$(($num_tests-$failures))
+  grade=$((($successes * 100) / ($num_tests)))
+
+  echo "You're grade is" $grade"%. Try again!"
+  exit 1
+fi
+```
+
+In the next section, we will run our script with a few submission repositories to show you how it works. 
+
+## 5. Examining our Grading Script
+We will use four example repositories to test our grading script in this section. 
+
+The first repository is https://github.com/ucsd-cse15l-f22/list-methods-lab3, and it contains an incorrect implementation. 
+
+![Image](lab5_image1.png)
+
+As you could see, our grading script does indeed mark this submission with a 0% and printed out the corresponding error message. 
+
+The second repository we will use to test is https://github.com/ucsd-cse15l-f22/list-methods-corrected, which contains a correct implementation. 
+
+![Image](lab5_image2.png)
+
+As expected, this submission got a 100%, nice job! 
+
+The third example we will use is a https://github.com/ucsd-cse15l-f22/list-methods-compile-error, which has a syntax error. 
+
+![Image](lab5_image3.png)
+
+The grading script gave this student a 0% as well and pointed out that it was due to a compiler error. This gives the student a clue as to where they should fix their code. 
+
+Lastly, we added two tests in our tester that will always pass no matter what, and now let's check the score calculation part of our grading script with the first repository above.
+
+![Image](lab5_image4.png)
+
+As you could see, the grade shows up as 66%, which is exactly what we predicted, so we can confirm that the grade calculation part is also correct. 
+
+This marks the end of the tutorial. Good luck in your future studies! 
