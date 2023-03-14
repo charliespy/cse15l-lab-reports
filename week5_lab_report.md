@@ -49,7 +49,8 @@ if [[ $? == 0 ]]
 then
   echo "successfully compiled"
 else
-  echo "compiler error"
+  echo "compiler error!!!"
+  cat compiler-error.txt
   echo "You're grade is 0%, try again!"
   exit 1
 fi
@@ -57,10 +58,36 @@ fi
 
 In the first line, by saying `cp ../TestListExamples.java ./`, we are copying the student code file and our test files in the same directory. 
 
-Then, by saying `javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java`, we are compiling the test file. In the same line right after this, by saying `2 > compiler-error.txt`, we are using a technique called "I/O redirection" to store any potential compile errors into a file called `compiler-error.txt`. 
+Then, by saying `javac -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" *.java`, we are compiling the test file. 
 
+In the same line right after this, by saying `2 > compiler-error.txt`, we are using a technique called "I/O redirection" to store any potential compile errors into a file called `compiler-error.txt`. The number 2 here is a file descriptor representing `stderr`. This allows us to stop the error, which would stop the file directly, and print our own corresponding messages. 
 
+Then, we are going to use an if-statement to print corresponding messages if there is or isn't an error during the compiling process. 
 
+## 4. Running the Tests and Reporting the Grade
+The code for this section is the following:
+```bash
+java -cp ".;../lib/hamcrest-core-1.3.jar;../lib/junit-4.13.2.jar" org.junit.runner.JUnitCore TestListExamples>results.txt 2>&1
+if [[ $? == 0 ]]
+then
+  echo "tests passed"
+  cat results.txt
+  echo "You're grade is 100%, congratulations!"
+
+else
+  echo "tests failed"
+  cat results.txt
+
+  num_tests=$(grep 'Tests run:' results.txt | sed 's/^.*: //')
+  failures=$(grep 'Failures:' results.txt | sed 's/^.*: //')
+  num_tests=$(($num_tests))
+  failures=$(($failures))
+  successes=$(($num_tests-$failures))
+  
+  echo "You're grade is:" $(($successes / $num_tests))"% Try again!"
+  exit 1
+fi
+```
 
 
 
